@@ -1,0 +1,13 @@
+.cpcache/
+.clj-kondo/
+target/
+.DS_Store
+*.swp
+*.swo
+*~
+.nrepl-port
+.calva/
+.vscode/
+node_modules/
+dist/
+build/
