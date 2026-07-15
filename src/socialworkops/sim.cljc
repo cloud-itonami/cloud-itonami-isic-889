@@ -7,9 +7,7 @@
   - All four HARD-hold scenarios: unregistered client, unverified client,
     non-:propose effect, scope-excluded content"
   (:require [socialworkops.store :as store]
-            [socialworkops.operation :as operation]
-            [socialworkops.phase :as phase])
-  #?(:clj (:import clojure.lang.ExceptionInfo)))
+            [socialworkops.operation :as operation]))
 
 #?(:clj
    (defn -main [& _args]

@@ -14,7 +14,7 @@
           request {:op :log-client-contact-note :client-id "c1"}
           proposal (advisor/-advise adv s request)
           verdict (governor/check request {} proposal s)
-          phase-result (phase/gate 3 request (phase/verdict->disposition verdict))]
+          phase-result (phase/gate 3 {:op :log-client-contact-note} (phase/verdict->disposition verdict))]
       (is (false? (:hard? verdict)) "no governor hard violations")
       (is (false? (:escalate? verdict)) "no escalation needed")
       (is (= :commit (:disposition phase-result)) "phase 3 allows auto-commit"))))
@@ -26,7 +26,7 @@
                              :summary "s" :rationale "r" :cites ["c1"]
                              :effect :propose :value {} :confidence 0.4}
           verdict (governor/check {} {} low-conf-proposal s)
-          phase-result (phase/gate 3 {} (phase/verdict->disposition verdict))]
+          phase-result (phase/gate 3 {:op :log-client-contact-note} (phase/verdict->disposition verdict))]
       (is (false? (:hard? verdict)))
       (is (true? (:escalate? verdict)) "low confidence triggers escalation")
       (is (= :escalate (:disposition phase-result))))))
@@ -39,7 +39,7 @@
                            :rationale "r" :cites ["c1"]
                            :effect :propose :value {} :confidence 0.95}
           verdict (governor/check {} {} safety-proposal s)
-          phase-result (phase/gate 3 {} (phase/verdict->disposition verdict))]
+          phase-result (phase/gate 3 {:op :flag-safety-concern} (phase/verdict->disposition verdict))]
       (is (false? (:hard? verdict)) "safety concern itself is not a hard violation")
       (is (true? (:high-stakes? verdict)) "safety concern is flagged as high-stakes")
       (is (true? (:escalate? verdict)) "always escalates")
@@ -55,7 +55,7 @@
       (is (true? (:hard? verdict)))
       (is (some #{:client-unverified} (map :rule (:violations verdict))))
       (doseq [p [0 1 2 3]]
-        (let [phase-result (phase/gate p {} (phase/verdict->disposition verdict))]
+        (let [phase-result (phase/gate p {:op :log-client-contact-note} (phase/verdict->disposition verdict))]
           (is (= :hold (:disposition phase-result)) (str "phase " p)))))))
 
 (deftest full-stack-scope-excluded-is-permanent
@@ -69,7 +69,7 @@
       (is (true? (:hard? verdict)))
       (is (some #{:scope-excluded} (map :rule (:violations verdict))))
       (doseq [p [0 1 2 3]]
-        (let [phase-result (phase/gate p {} (phase/verdict->disposition verdict))]
+        (let [phase-result (phase/gate p {:op :log-client-contact-note} (phase/verdict->disposition verdict))]
           (is (= :hold (:disposition phase-result)) (str "phase " p)))))))
 
 (deftest full-stack-phase-gating-requires-approval
@@ -79,7 +79,7 @@
           request {:op :log-client-contact-note :client-id "c1"}
           proposal (advisor/-advise adv s request)
           verdict (governor/check request {} proposal s)
-          phase-result (phase/gate 1 request (phase/verdict->disposition verdict))]
+          phase-result (phase/gate 1 {:op :log-client-contact-note} (phase/verdict->disposition verdict))]
       (is (false? (:hard? verdict)))
       (is (false? (:escalate? verdict)) "governor is clean")
       (is (= :escalate (:disposition phase-result)) "phase 1 still requires approval"))))
@@ -94,5 +94,5 @@
       (doseq [op ops]
         (let [proposal (make-proposal op)
               verdict (governor/check {} {} proposal s)
-              phase-result (phase/gate 3 {} (phase/verdict->disposition verdict))]
+              phase-result (phase/gate 3 {:op op} (phase/verdict->disposition verdict))]
           (is (= :commit (:disposition phase-result)) (str "op " op)))))))
