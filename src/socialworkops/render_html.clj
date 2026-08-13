@@ -288,7 +288,7 @@
 (defn- disposition-cell [{:keys [disposition interrupted? approval]}]
   (case disposition
     :commit (if approval
-              (str "<span class=\"ok\">committed after human approval</span>")
+              "<span class=\"ok\">committed after human approval</span>"
               "<span class=\"ok\">auto-committed</span>")
     :hold (cond
             (= :rejected approval) "<span class=\"critical\">held &middot; human declined</span>"
@@ -435,7 +435,9 @@
                    "These are permanent and un-overridable: no human approval can release them, and they "
                    "never reach a human at all. Every row carries at least one violation &mdash; that is "
                    "what separates this table from the next one.")
-              (table ["Op" "Client" "Rule" "Governor&rsquo;s own detail"]
+              ;; NB: header cells go through `esc`, so write plain text here --
+              ;; an HTML entity would come back out double-escaped.
+              (table ["Op" "Client" "Rule" "Governor's own detail (verbatim)"]
                      (map hard-hold-row hard-holds)))
 
      (section "Phase / rollout gate holds (NOT governor refusals)"
@@ -456,7 +458,12 @@
      (section "Committed coordination records"
               (str (esc (count records)) " record(s) reached the SSoT. Approver attribution is derived at "
                    "render time by scanning each record for an approver key. "
-                   (approver-disclosure records runs))
+                   (approver-disclosure records runs)
+                   " <em>Approver identity caveat:</em> every client id on this page comes from "
+                   "<code>socialworkops.store/demo-data</code>, but <code>" (esc approver) "</code> does not "
+                   "&mdash; this repo&rsquo;s store has a client directory and no operator directory, so the "
+                   "approver is whatever the caller passes in <code>{:approval {:by ..}}</code>. It is named "
+                   "by role here rather than invented as a person.")
               (table ["Op" "Client" "Approved by" "Stored payload"]
                      (map record-row records)))
 

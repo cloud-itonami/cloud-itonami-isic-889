@@ -2523,7 +2523,7 @@ img,svg { max-width: 100%; height: auto; }</style></head>
     <h2>HARD governor holds</h2>
     <p class="muted">4 refusal(s) by the SocialWorkGovernor itself, across 4 distinct rule(s). These are permanent and un-overridable: no human approval can release them, and they never reach a human at all. Every row carries at least one violation &mdash; that is what separates this table from the next one.</p>
     <table>
-      <thead><tr><th>Op</th><th>Client</th><th>Rule</th><th>Governor&amp;rsquo;s own detail</th></tr></thead>
+      <thead><tr><th>Op</th><th>Client</th><th>Rule</th><th>Governor's own detail (verbatim)</th></tr></thead>
       <tbody>
         <tr><td><code>log-client-contact-note</code></td><td><code>client-3</code></td><td><span class="critical">client-unverified</span></td><td>client-3 は未登録または未検証のクライアント -- いかなる提案も進められない</td></tr>
         <tr><td><code>determine-benefits-eligibility</code></td><td><code>client-1</code></td><td><span class="critical">op-not-allowed</span></td><td>:determine-benefits-eligibility は許可された操作(closed allowlist)に含まれない</td></tr>
@@ -2556,7 +2556,7 @@ img,svg { max-width: 100%; height: auto; }</style></head>
   </section>
   <section class="card">
     <h2>Committed coordination records</h2>
-    <p class="muted">6 record(s) reached the SSoT. Approver attribution is derived at render time by scanning each record for an approver key. <span class="ok">Retained on the record.</span> 2 run(s) were approved by a human and 2 committed record(s) carry the approver, read directly off the record (no join on <code>[op client-id]</code> &mdash; that pair is not unique here). Note the ledger&rsquo;s own <code>:committed</code> fact does NOT carry the approver: the <code>:approval-granted</code> fact stays in the run&rsquo;s <code>:audit</code> channel and is never appended to the store, so the coordination record is the only durable place the approver survives.</p>
+    <p class="muted">6 record(s) reached the SSoT. Approver attribution is derived at render time by scanning each record for an approver key. <span class="ok">Retained on the record.</span> 2 run(s) were approved by a human and 2 committed record(s) carry the approver, read directly off the record (no join on <code>[op client-id]</code> &mdash; that pair is not unique here). Note the ledger&rsquo;s own <code>:committed</code> fact does NOT carry the approver: the <code>:approval-granted</code> fact stays in the run&rsquo;s <code>:audit</code> channel and is never appended to the store, so the coordination record is the only durable place the approver survives. <em>Approver identity caveat:</em> every client id on this page comes from <code>socialworkops.store/demo-data</code>, but <code>coordinator-on-call</code> does not &mdash; this repo&rsquo;s store has a client directory and no operator directory, so the approver is whatever the caller passes in <code>{:approval {:by ..}}</code>. It is named by role here rather than invented as a person.</p>
     <table>
       <thead><tr><th>Op</th><th>Client</th><th>Approved by</th><th>Stored payload</th></tr></thead>
       <tbody>
