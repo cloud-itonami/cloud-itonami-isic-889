@@ -155,4 +155,10 @@
 
       (g/add-edge :commit :hold)
 
-      (g/compile {:checkpointer checkpointer})))
+      ;; `langgraph.graph` names this `compile-graph` (never `compile` --
+      ;; that would shadow `clojure.core/compile`). This namespace called
+      ;; `g/compile` and therefore did not load AT ALL: no test requires
+      ;; `socialworkops.operation`, so the whole actor graph -- the thing
+      ;; this repo exists to be -- was never once executed. Found by
+      ;; `socialworkops.render-html`, which drives it for real.
+      (g/compile-graph {:checkpointer checkpointer})))
