@@ -9,7 +9,7 @@
         ;; jp-go-digital-design-system (DADS) -- the workspace's base design
         ;; system; `socialworkops.render-html` streams `dds+skin` into the
         ;; generated console's <style>. Git coordinates (not :local/root) so
-        ;; `clojure -M:render-html` works in a standalone fork too.
+        ;; `kbb -M:render-html` works in a standalone fork too.
         io.github.kotoba-lang/jp-go-digital-design-system
         {:git/url "https://github.com/kotoba-lang/jp-go-digital-design-system"
          :git/sha "83db99546eabc53613ae826ea41d1533a3c574af"}}
@@ -20,7 +20,7 @@
          io.github.kotoba-lang/langchain
          {:local/root "../../kotoba-lang/langchain"}}}
   :run {:main-opts ["-m" "socialworkops.sim"]}
-  ;; clojure -M:render-html [out-file] -> regenerate
+  ;; kbb -M:render-html [out-file] -> regenerate
   ;; docs/samples/operator-console.html by driving the REAL actor.
   ;; Throws instead of writing if the run produced zero HARD governor holds.
   :render-html {:main-opts ["-m" "socialworkops.render-html"]}
