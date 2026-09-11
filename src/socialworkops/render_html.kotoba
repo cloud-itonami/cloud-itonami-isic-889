@@ -15,7 +15,7 @@
   names that fn `compile-graph`, so the namespace failed to load. No test
   requires `socialworkops.operation`, so nothing ever noticed -- the
   StateGraph this repo exists to be had never once been executed
-  (`clojure -M:run` was broken too). Fixed in the same commit as this
+  (`kbb -M:run` was broken too). Fixed in the same commit as this
   renderer; the fix is what makes the page possible.
 
   Three kinds of refusal appear on this page and are NEVER merged into
@@ -38,7 +38,7 @@
   seeded store per run -- byte-identical across reruns. Verify with two
   runs into two scratch paths and `cmp`.
 
-  Usage: `clojure -M:render-html [out-file]`
+  Usage: `kbb -M:render-html [out-file]`
   (default `docs/samples/operator-console.html`)."
   (:require [kotoba.lang.text :as str]
             [jp-go-dds.skin]
@@ -401,7 +401,7 @@
      "</header>\n"
      "<main>\n"
      "  <p class=\"subtitle\">Build-time output of <code>socialworkops.render-html</code> "
-     "(<code>clojure -M:render-html</code>). Every row below was produced by running the real "
+     "(<code>kbb -M:render-html</code>). Every row below was produced by running the real "
      "<code>socialworkops.operation</code> StateGraph &mdash; advisor &rarr; SocialWorkGovernor &rarr; "
      "phase gate &rarr; store &mdash; against the store&rsquo;s own seeded client directory. "
      "Nothing here is hand-written and nothing is a mock of the output.</p>\n"

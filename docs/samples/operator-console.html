@@ -2469,7 +2469,7 @@ img,svg { max-width: 100%; height: auto; }</style></head>
   <span class="badge">read-only sample &middot; coordination only &middot; governor-gated</span>
 </header>
 <main>
-  <p class="subtitle">Build-time output of <code>socialworkops.render-html</code> (<code>clojure -M:render-html</code>). Every row below was produced by running the real <code>socialworkops.operation</code> StateGraph &mdash; advisor &rarr; SocialWorkGovernor &rarr; phase gate &rarr; store &mdash; against the store&rsquo;s own seeded client directory. Nothing here is hand-written and nothing is a mock of the output.</p>
+  <p class="subtitle">Build-time output of <code>socialworkops.render-html</code> (<code>kbb -M:render-html</code>). Every row below was produced by running the real <code>socialworkops.operation</code> StateGraph &mdash; advisor &rarr; SocialWorkGovernor &rarr; phase gate &rarr; store &mdash; against the store&rsquo;s own seeded client directory. Nothing here is hand-written and nothing is a mock of the output.</p>
   <section class="card">
     <h2>Client directory (SSoT)</h2>
     <p class="muted">The governor re-derives <code>:registered?</code>/<code>:verified?</code> from these records on every single proposal and never trusts a proposal&rsquo;s own claim about its client. <code>client-3</code> is still in intake &mdash; that is real seed data, and it is why one HARD hold below exists.</p>

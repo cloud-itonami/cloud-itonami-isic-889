@@ -8,13 +8,13 @@ A coordination-only actor for non-residential community social work: counseling,
 
 ```bash
 # Run tests
-clojure -M:test
+kbb -M:test
 
 # Run linter
-clojure -M:lint
+kbb -M:lint
 
 # Run demo simulator
-clojure -M:run
+kbb -M:run
 ```
 
 ## Architecture
